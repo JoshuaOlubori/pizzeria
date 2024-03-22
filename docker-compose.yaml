@@ -13,7 +13,9 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: secret
     volumes:
-      - ./source_db_init/init.sql:docker-entrypoint-initdb.d/init.sql
+      - ./source_db_init/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+
 
 # # AIRFLOW #
 #   postgres:
@@ -110,5 +112,5 @@ services:
 #       DBT_TARGET: dev
 
 # networks:
-  elt_network:
-    driver: bridge
+#   elt_network:
+#     driver: bridge

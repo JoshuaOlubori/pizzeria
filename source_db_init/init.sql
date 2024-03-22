@@ -3,16 +3,22 @@ CREATE TABLE customers (
   "cust_firstname" varchar(50),
   "cust_lastname" varchar(50)
 );
-INSERT INTO customers (cust_id, cust_firstname, cust_lastname)
-VALUES (1, 'Amani', 'Mbogo'),
-       (2, 'Kofi', 'Osei'),
-       (3, 'Dikeledi', 'Chukwuemeka'),
-       (4, 'Aisha', 'Hassan'),
-       (5, 'Ayo', 'Bakare');
+INSERT INTO "customers" ("cust_id", "cust_firstname", "cust_lastname") VALUES
+(1, 'Chinonso', 'Okonkwo'),
+(2, 'Fatoumata', 'Diallo'),
+(3, 'Kwame', 'Osei'),
+(4, 'Ngozi', 'Chukwu'),
+(5, 'Musa', 'Abdullahi'),
+(6, 'Aisha', 'Nkosi'),
+(7, 'Amara', 'Okafor'),
+(8, 'Adeola', 'Oladele'),
+(9, 'Sekou', 'Diop'),
+(10, 'Zainab', 'Suleiman');
+
 
 CREATE TABLE item (
   "item_id" varchar(10) PRIMARY KEY,
-  "sku" varchar(20),
+  "sku" varchar(20) UNIQUE,
   "item_name" varchar(100),
   "item_cat" varchar(50),
   "item_size" varchar(20),
@@ -114,7 +120,7 @@ VALUES (1, 'PIZZA01', 'I001', 200),  -- 200g Flour
 CREATE TABLE orders (
   "row_id" int PRIMARY KEY,
   "order_id" varchar(10),
-  "created_at" datetime,
+  "created_at" timestamp UNIQUE,
   "item_id" varchar(10),
   "quantity" int,
   "cust_id" int,
@@ -122,24 +128,21 @@ CREATE TABLE orders (
   "add_id" int
 );
 
-INSERT INTO orders (order_id, created_at, item_id, quantity, cust_id, delivery, add_id)
-VALUES ('ORD0001', '2024-03-22 12:00:00', 'P001', 1, 1, TRUE, 1),
-       ('ORD0002', '2024-03-22 13:15:00', 'P002', 2, 2, FALSE, NULL),
-       ('ORD0003', '2024-03-22 14:30:00', 'P003', 1, 3, TRUE, 2),
-       ('ORD0004', '2024-03-22 15:45:00', 'DRNK01', 2, 4, TRUE, 3),
-       ('ORD0005', '2024-03-22 16:00:00', 'P001', 1, 5, FALSE, NULL),
-       ('ORD0006', '2024-03-22 17:15:00', 'SIDE01', 2, 1, TRUE, 4),
-       ('ORD0007', '2024-03-22 18:30:00', 'P002', 1, 3, TRUE, 5),
-       ('ORD0007', '2024-03-22 18:30:00', 'DRNK01', 1, 3, TRUE, 5),
-       ('ORD0008', '2024-03-22 19:00:00', 'P003', 1, 2, FALSE, NULL),
-       ('ORD0008', '2024-03-22 19:00:00', 'SIDE01', 1, 2, FALSE, NULL),
-       ('ORD0009', '2024-03-23 10:15:00', 'P001', 2, 4, TRUE, 1),
-       ('ORD0010', '2024-03-23 11:30:00', 'P002', 1, 3, TRUE, 5),
-       ('ORD0010', '2024-03-23 11:30:00', 'DRNK01', 1, 3, TRUE, 5),
-       ('ORD0010', '2024-03-23 11:30:00', 'SIDE01', 1, 3, TRUE, 5);
-
-
-
+INSERT INTO orders (row_id, order_id, created_at, item_id, quantity, cust_id, delivery, add_id)
+VALUES (1,'ORD0001', '2024-03-22 12:00:00', 'P001', 1, 1, TRUE, 1),
+       (2,'ORD0002', '2024-03-22 13:15:00', 'P002', 2, 2, FALSE, 4),
+       (3,'ORD0003', '2024-03-22 14:30:00', 'P003', 1, 3, TRUE, 2),
+       (4,'ORD0004', '2024-03-22 15:45:00', 'DRNK01', 2, 4, TRUE, 3),
+       (5,'ORD0005', '2024-03-22 16:00:00', 'P001', 1, 5, FALSE, 1),
+       (6,'ORD0006', '2024-03-22 17:15:00', 'SIDE01', 2, 1, TRUE, 4),
+       (7,'ORD0007', '2024-03-22 18:30:00', 'P002', 1, 3, TRUE, 5),
+       (8,'ORD0007', '2024-03-22 18:30:01', 'DRNK01', 1, 3, TRUE, 5),
+       (9,'ORD0008', '2024-03-22 19:20:00', 'P003', 1, 2, FALSE, 3),
+       (10,'ORD0008', '2024-03-22 19:00:00', 'SIDE01', 1, 2, FALSE, 1),
+       (11,'ORD0009', '2024-03-23 10:15:00', 'P001', 2, 4, TRUE, 1),
+       (12,'ORD0010', '2024-03-23 12:30:00', 'P002', 1, 3, TRUE, 5),
+       (13,'ORD0010', '2024-03-23 11:33:00', 'DRNK01', 1, 3, TRUE, 5),
+       (14,'ORD0010', '2024-03-23 11:30:00', 'SIDE01', 1, 3, TRUE, 5);
 
 
 CREATE TABLE staff (
@@ -174,19 +177,19 @@ VALUES ('SHFT01', 'Monday', '10:00:00', '18:00:00'),
 CREATE TABLE rota (
   "row_id" int PRIMARY KEY,
   "rota_id" varchar(20),
-  "date" datetime,
+  "date" timestamp,
   "shift_id" varchar(20),
   "staff_id" varchar(20)
 );
-INSERT INTO rota (row_id, rota_id, date, shift_id, staff_id)
+INSERT INTO rota (row_id, rota_id, shift_id, staff_id)
 VALUES
-(1, 'ROT001', '2023-03-20 00:00:00', 'SHFT01', 'STF002'), -- Nneka Okafor (Waitress) on Monday
-(2, 'ROT002', '2023-03-21 00:00:00', 'SHFT02', 'STF001'), -- Themba Dlamini (Chef) on Tuesday
-(3, 'ROT003', '2023-03-22 00:00:00', 'SHFT03', 'STF005'), -- Kwesi Arthur (Assistant Chef) on Wednesday
-(4, 'ROT004', '2023-03-23 00:00:00', 'SHFT04', 'STF004'), -- Zanele Mbatha (Manager) on Thursday
-(5, 'ROT005', '2023-03-24 00:00:00', 'SHFT05', 'STF003'), -- Musa Kamara (Delivery Driver) on Friday
-(6, 'ROT006', '2023-03-25 00:00:00', 'SHFT06', 'STF001'), -- Themba Dlamini (Chef) on Saturday
-(7, 'ROT007', '2023-03-26 00:00:00', 'SHFT07', 'STF002'); -- Nneka Okafor (Waitress) on Sunday
+(1, 'ROT001', 'SHFT01', 'STF002'), -- Nneka Okafor (Waitress) on Monday
+(2, 'ROT002', 'SHFT02', 'STF001'), -- Themba Dlamini (Chef) on Tuesday
+(3, 'ROT003',  'SHFT03', 'STF005'), -- Kwesi Arthur (Assistant Chef) on Wednesday
+(4, 'ROT004',  'SHFT04', 'STF004'), -- Zanele Mbatha (Manager) on Thursday
+(5, 'ROT005', 'SHFT05', 'STF003'), -- Musa Kamara (Delivery Driver) on Friday
+(6, 'ROT006',  'SHFT06', 'STF001'), -- Themba Dlamini (Chef) on Saturday
+(7, 'ROT007',  'SHFT07', 'STF002'); -- Nneka Okafor (Waitress) on Sunday
 
 ALTER TABLE "orders" ADD FOREIGN KEY ("cust_id") REFERENCES "customers" ("cust_id");
 
@@ -203,5 +206,3 @@ ALTER TABLE "inventory" ADD FOREIGN KEY ("item_id") REFERENCES "ingredient" ("in
 ALTER TABLE "rota" ADD FOREIGN KEY ("shift_id") REFERENCES "shift" ("shift_id");
 
 ALTER TABLE "rota" ADD FOREIGN KEY ("staff_id") REFERENCES "staff" ("staff_id");
-
-ALTER TABLE "rota" ADD FOREIGN KEY ("date") REFERENCES "orders" ("created_at");
