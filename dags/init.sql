@@ -1,4 +1,5 @@
-CREATE TABLE customers (
+
+CREATE TABLE IF NOT EXISTS customers (
   "cust_id" int PRIMARY KEY,
   "cust_firstname" varchar(50),
   "cust_lastname" varchar(50)
@@ -16,7 +17,7 @@ INSERT INTO "customers" ("cust_id", "cust_firstname", "cust_lastname") VALUES
 (10, 'Zainab', 'Suleiman');
 
 
-CREATE TABLE item (
+CREATE TABLE IF NOT EXISTS item (
   "item_id" varchar(10) PRIMARY KEY,
   "sku" varchar(20) UNIQUE,
   "item_name" varchar(100),
@@ -31,7 +32,7 @@ VALUES ('P001', 'PIZZA01', 'Pepperoni Pizza', 'Pizza', 'Medium', 12.99),
        ('DRNK01', 'DRINK01', 'Soft Drink (Can)', 'Drinks', '330ml', 1.50),
        ('SIDE01', 'SIDE01', 'Garlic Bread', 'Sides', '', 3.00);
 
-CREATE TABLE inventory (
+CREATE TABLE IF NOT EXISTS inventory (
   "inv_id" int PRIMARY KEY,
   "item_id" varchar(10),
   "quantity" int
@@ -49,7 +50,7 @@ VALUES (1, 'I001', 5000),  -- 5kg Flour
        (9, 'I009', 800),   -- 800g Mushrooms
        (10, 'I010', 250);  -- 250g Basil Leaves
 
-CREATE TABLE address (
+CREATE TABLE IF NOT EXISTS address (
   "add_id" int PRIMARY KEY,
   "delivery_address1" varchar(200),
   "delivery_address2" varchar(200),
@@ -63,7 +64,7 @@ VALUES (1, '12 Acacia Lane', 'Apartment B', 'Sun Valley', '01234'),
        (4, '8 Baobab Boulevard', '', 'Cape Town', '23456'),
        (5, '1 Flamingo Way', '', 'Accra', '10987');
 
-CREATE TABLE ingredient (
+CREATE TABLE IF NOT EXISTS ingredient (
   "ing_id" varchar(10) PRIMARY KEY,
   "ing_name" varchar(200),
   "ing_weight" int,
@@ -82,7 +83,7 @@ VALUES ('I001', 'Flour (All-Purpose)', 1000, 'Grams', 2.50),
        ('I009', 'Mushrooms', 200, 'Grams', 1.50),
        ('I010', 'Basil Leaves', 50, 'Grams', 0.50);
 
-CREATE TABLE recipe (
+CREATE TABLE IF NOT EXISTS recipe (
   "row_id" int PRIMARY KEY,
   "recipe_id" varchar(20),
   "ing_id" varchar(10),
@@ -117,7 +118,7 @@ VALUES (1, 'PIZZA01', 'I001', 200),  -- 200g Flour
        (20, 'PIZZA03', 'I009', 100),  -- 100g Mushrooms
        (21, 'PIZZA03', 'I010', 5);   -- 5g Basil Leaves
 
-CREATE TABLE orders (
+CREATE TABLE IF NOT EXISTS orders (
   "row_id" int PRIMARY KEY,
   "order_id" varchar(10),
   "created_at" timestamp UNIQUE,
@@ -145,7 +146,7 @@ VALUES (1,'ORD0001', '2024-03-22 12:00:00', 'P001', 1, 1, TRUE, 1),
        (14,'ORD0010', '2024-03-23 11:30:00', 'SIDE01', 1, 3, TRUE, 5);
 
 
-CREATE TABLE staff (
+CREATE TABLE IF NOT EXISTS staff (
   "staff_id" varchar(20) PRIMARY KEY,
   "first_name" varchar(50),
   "last_name" varchar(50),
@@ -159,7 +160,7 @@ VALUES ('STF001', 'Themba', 'Dlamini', 'Chef', 18.50),
        ('STF004', 'Zanele', 'Mbatha', 'Manager', 22.00),
        ('STF005', 'Kwesi', 'Arthur', 'Assistant Chef', 16.00);
 
-CREATE TABLE shift (
+CREATE TABLE IF NOT EXISTS shift (
   "shift_id" varchar(20) PRIMARY KEY,
   "day_of_week" varchar(10),
   "start_time" time,
@@ -174,7 +175,7 @@ VALUES ('SHFT01', 'Monday', '10:00:00', '18:00:00'),
        ('SHFT06', 'Saturday', '11:00:00', '23:00:00'),
        ('SHFT07', 'Sunday', '12:00:00', '20:00:00');
 
-CREATE TABLE rota (
+CREATE TABLE IF NOT EXISTS rota (
   "row_id" int PRIMARY KEY,
   "rota_id" varchar(20),
   "date" timestamp,

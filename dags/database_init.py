@@ -2,18 +2,18 @@
 from airflow.decorators import dag, task, task_group
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 from pendulum import datetime
-
+from include import global_variables as gv
 
 @dag(
     start_date=datetime(2023, 1, 1),
     # after being unpaused this DAG will run once, afterwards it can be run
     # manually with the play button in the Airflow UI
-    schedule="@daily",
+    schedule=[gv.DS_START],
     catchup=False,
     description="Run this DAG to start the pipeline!",
-    tags=["start", "setup"],
+    tags=["setup"],
 )
-def a_start():
+def database_init():
 
     # this task uses the BashOperator to run a bash command creating an Airflow
     # pool called 'duckdb' which contains one worker slot. All tasks running
@@ -29,4 +29,4 @@ def a_start():
 
 
 
-start_dag = a_start()
+database_init = database_init()
